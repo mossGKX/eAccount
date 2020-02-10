@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageLogInfoMapper">
+
+    <insert id="addManageLogInfo" parameterType="com.ucsmy.core.bean.ManageLogInfo">
+        INSERT INTO
+        manage_log_info(id, create_time, ip_address, log_level, message, user_name, user_id)
+        VALUES (
+        #{id},
+        #{createTime},
+        #{ipAddress},
+        #{logLevel},
+        #{message},
+        #{userName},
+        #{userId}
+        )
+    </insert>
+</mapper>

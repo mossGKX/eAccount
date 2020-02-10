@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageUserProfileDao">
+
+	<sql id="query">
+		SELECT 
+			up.id,
+			up.name,
+			up.introduce,
+			up.telephone,
+			up.mobilephone,
+			up.create_date as createDate,
+			up.update_date as updateDate,
+			up.email,
+			up.birthday,
+			up.gender,
+			up.starff_id as starffId,
+			up.position,
+			up.type,
+			ua.id as "account.id",
+			ua.create_time as "account.createTime",
+			ua.password as "account.password",
+			ua.salt as "account.salt",
+			ua.status as "account.status",
+			ua.account as "account.account",
+			ua.email as "account.email",
+			ua.mobilephone as "account.mobilephone",
+			r.id as "account.role.id",
+			r.name as "account.role.name",
+			r.description as "account.role.description",
+			org.id as "org.id",
+			org.name as "org.name",
+			org.description as "org.description",
+			org.weight as "org.weight",
+			org.pid as "org.pid"
+		FROM manage_user_profile up join manage_user_account ua on up.id = ua.id
+				left join manage_role r on r.id = ua.role_id
+				left join manage_organization org on up.org_id = org.id
+	</sql>
+
+	<insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.ManageUserProfile">
+		insert into manage_user_profile(
+			id,
+			name,
+			introduce,
+			telephone,
+			mobilephone,
+			create_date,
+			update_date,
+			email,
+			birthday,
+			gender,
+			starff_id,
+			position,
+			type,
+			org_id
+		)
+		values(
+			#{id},
+			#{name},
+			#{introduce},
+			#{telephone},
+			#{mobilephone},
+			#{createDate},
+			#{updateDate},
+			#{email},
+			#{birthday},
+			#{gender},
+			#{starffId},
+			#{position},
+			#{type},
+			#{org.id}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.ucsmy.eaccount.manage.entity.ManageUserProfile">
+		UPDATE manage_user_profile
+		SET
+			name = #{name},
+			introduce = #{introduce},
+			telephone = #{telephone},
+			mobilephone = #{mobilephone},
+			update_date = #{updateDate},
+			email = #{email},
+			birthday = #{birthday},
+			gender = #{gender},
+			starff_id = #{starffId},
+			position = #{position},
+			org_id = #{org.id}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE FROM manage_user_profile WHERE id = #{id}
+	</delete>
+
+	<select id="find" resultType="com.ucsmy.eaccount.manage.entity.ManageUserProfile">
+		<include refid="query"/>
+		<where>
+			<if test="entity != null">
+				<if test="!(entity.name == null || entity.name == '')">
+					and up.name LIKE CONCAT('%', #{entity.name}, '%')
+				</if>
+				<if test="!(entity.org == null || entity.org.id == null || entity.org.id == '')">
+					and org.id = #{entity.org.id}
+				</if>
+			</if>
+		</where>
+		order by up.create_date
+	</select>
+
+	<select id="findById" resultType="com.ucsmy.eaccount.manage.entity.ManageUserProfile" parameterType="String">
+		<include refid="query"/>
+		WHERE up.id = #{id}
+	</select>
+</mapper>

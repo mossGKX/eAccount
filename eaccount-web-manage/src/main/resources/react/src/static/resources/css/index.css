@@ -1,0 +1,172 @@
+/** login */
+.login {
+    height: 100vh;
+    background-color: #364150!important;
+    font-size: 14px !important;
+}
+.login .logo {
+    margin: 60px auto 0;
+    padding: 15px;
+    text-align: center;
+}
+.login .logo img {
+    vertical-align: middle;
+    height: 43px;
+}
+.login .content{
+    background-color: #fff;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
+    border-radius: 7px;
+    width: 400px;
+    margin: 70px auto 10px;
+    padding: 10px 30px 30px;
+    overflow: hidden;
+    position: relative;
+}
+.login .content h3 {
+    color: #32c5d2;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 400 !important;
+    margin: 20px 0 25px 0;
+}
+.login .content input {
+    height: 43px !important;
+    font-size: 14px !important;
+}
+.login .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 32px !important;
+}
+.login-form-button {
+    width: 100%;
+    height: 43px !important;
+}
+.login .ant-btn-lg {
+    font-size: 16px;
+}
+/** index */
+.text-center {
+    text-align: center;
+}
+.content {
+    margin: 18px;
+    background: #fff;
+    border-radius: 4px;
+    height: 100%;
+}
+.logo {
+    background-size: 86px 14px;
+    height: 32px;
+    border-radius: 6px;
+    margin: 16px;
+}
+.logo-background {
+    cursor: pointer;
+    background: url("../image/logo.png") no-repeat 0;
+    background-size: 125px;
+}
+.logo .trigger {
+    font-size: 18px;
+    line-height: 28px;
+    padding: 0 10px;
+    cursor: pointer;
+    transition: color .3s;
+    color: #108ee9;
+    float: right;
+}
+.ant-layout-sider-collapsed .anticon {
+    font-size: 16px;
+}
+.ant-layout-sider-collapsed .nav-text {
+    display: none;
+}
+
+.ant-layout-header {
+    line-height: 50px !important;
+    height: 50px !important;
+}
+.wzz-header {
+    padding-right: 35px;
+    float: right;
+}
+.wzz-header .anticon {
+    font-size: 15px;
+    line-height: inherit !important;
+    padding: 0 2px 0 22px;
+}
+
+.ant-advanced-search-form {
+    padding: 24px 24px 10px 24px;
+    background: #fbfbfb;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+}
+.search-result-list {
+    padding-top: 24px;
+}
+.search-toolbar {
+    padding-bottom: 10px;
+}
+.ant-table-large .ant-table-tbody>tr>td, .ant-table-large .ant-table-thead>tr>th {
+    padding: 10px 8px !important;
+}
+.ant-table-wrapper-tag .ant-table-large .ant-table-tbody>tr>td {
+    padding: 8px 8px !important;
+}
+.none {
+    display: none;
+}
+.form-title {
+    font-size: 18px;
+    font-weight:bold;
+}
+.search-toolbar .ant-btn {
+    margin-right: 8px;
+}
+/** table筛选 */
+.custom-filter-dropdown {
+    padding: 8px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+}
+.custom-filter-dropdown .ant-select {
+    width: 130px;
+    margin-right: 8px;
+}
+.highlight {
+    color: #f50;
+}
+.ant-breadcrumb-link a {
+    text-decoration: none;
+}
+.error-page .error-state {
+    line-height: 96px;
+    font-weight: 700;
+    font-size: 96px;
+    color: rgba(0, 0, 0, 0.447058823529412);
+}
+.error-page .error-text {
+    line-height: 56px;
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.447058823529412);
+}
+.error-page a {
+    font-size: 18px;
+}
+
+.ant-calendar-picker {
+    position: static !important;
+    display: block !important;
+}
+.overtime-calendar .ant-fullcalendar-date {
+    height: 80px;
+}
+.captcha .ant-input-suffix {
+    right: 1px;
+    top: 49%;
+    cursor: pointer;
+}

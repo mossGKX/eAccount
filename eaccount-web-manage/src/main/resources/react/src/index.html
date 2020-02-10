@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%= htmlWebpackPlugin.options.data.clientName %>"/>
+    <meta charset="UTF-8" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <link rel="stylesheet" type="text/css" href="resources/css/antd.min.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/index.css" />
+    <!-- 前后端分离时，api作为代理标识，被代理后会移除 -->
+    <script type="text/javascript">
+        var ctx = 'api/';
+    </script>
+</head>
+<body>
+<div id="root" ></div>
+<script type="text/javascript" src="resources/js/react.min.js"></script>
+<script type="text/javascript" src="resources/js/react-dom.min.js"></script>
+<script type="text/javascript" src="resources/js/moment.min.js"></script>
+<script type="text/javascript" src="resources/js/monent-zh-cn.js"></script>
+<script type="text/javascript" src="resources/js/antd.min.js"></script>
+<script type="text/javascript" src="resources/js/dva.min.js"></script>
+<script type="text/javascript" src="resources/js/router.min.js"></script>
+<script type="text/javascript" src="resources/js/polyfill.min.js"></script>
+<script type="text/javascript" src="resources/js/encryption.js"></script>
+<script type="text/javascript" src="resources/index.js?<%= htmlWebpackPlugin.options.hash %>"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageMenuDao">
+
+    <resultMap id="retMap" type="com.ucsmy.eaccount.manage.entity.ManageMenu">
+        <id column="id" property="id"/>
+        <result column="label" property="label"/>
+        <result column="icon" property="icon"/>
+        <result column="path" property="path"/>
+        <result column="pid" property="pid"/>
+        <result column="weight" property="weight"/>
+        <result column="sn" property="sn"/>
+        <collection property="resources" ofType="com.ucsmy.eaccount.manage.entity.ManageResources">
+            <id column="resId" property="id"/>
+            <result column="groupName" property="groupName"/>
+            <result column="name" property="name"/>
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+
+    <sql id="query">
+        SELECT id, label, icon, path, pid, weight, sn
+        FROM manage_menu mm
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.ManageMenu">
+        insert into manage_menu(id, label, icon, path, pid, weight, sn)
+        values(#{id}, #{label}, #{icon}, #{path}, #{pid}, #{weight}, #{sn})
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.eaccount.manage.entity.ManageMenu">
+        update manage_menu
+        set
+            label = #{label},
+            icon = #{icon},
+            path = #{path},
+            pid = #{pid},
+            weight = #{weight},
+            sn = #{sn}
+        where
+          id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from manage_menu
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageMenu">
+        <include refid="query"/>
+        where id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageMenu">
+        <include refid="query"/>
+    </select>
+
+    <insert id="updateResources" parameterType="com.ucsmy.eaccount.manage.entity.ManageMenu">
+        DELETE FROM manage_menu_resources WHERE menu_id = #{id};
+        <if test="resources.size() != 0">
+            insert into manage_menu_resources(menu_id, resources_id)
+            values
+            <foreach collection="resources" item="item" index="index" separator="," >
+                (#{id},#{item.id})
+            </foreach>;
+        </if>
+    </insert>
+
+    <select id="findByRoleId" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageMenu">
+        <include refid="query"/>
+        JOIN manage_role_menu mrm ON mm.id = mrm.menu_id
+        WHERE mrm.role_id = #{roleId}
+    </select>
+
+    <select id="findMenuAndResources" parameterType="string" resultMap="retMap">
+        SELECT DISTINCT mm.id, mm.label, mm.icon, mm.path, mm.pid, mm.weight, mm.sn, mr.id as resId, mr.GROUP_NAME as groupName, mr.NAME, mr.URL
+        FROM manage_menu mm JOIN manage_menu_resources mmr ON mm.id = mmr.menu_id JOIN manage_resources mr ON mmr.resources_id = mr.id
+    </select>
+</mapper>

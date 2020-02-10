@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageIpScheduleTaskDao">
+
+    <sql id="query">
+        SELECT t.id, t.task_code AS taskCode, t.task_name AS taskName,
+        t.task_conf AS taskConf, t.task_class AS taskClass, t.task_server_ip AS taskServerIp,
+        t.status, t.remark
+        FROM manage_ip_schedule_task t
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.ManageIpScheduleTask">
+        insert
+        manage_ip_schedule_task(id, task_code, task_name, task_conf, task_class, task_server_ip, status, remark)
+        values(
+        #{id},
+        #{taskCode},
+        #{taskName},
+        #{taskConf},
+        #{taskClass},
+        #{taskServerIp},
+        #{status},
+        #{remark}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.eaccount.manage.entity.ManageIpScheduleTask">
+        update
+        manage_ip_schedule_task
+        set
+        task_code = #{taskCode},
+        task_name = #{taskName},
+        task_conf = #{taskConf},
+        task_class = #{taskClass},
+        task_server_ip = #{taskServerIp},
+        remark = #{remark}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="String">
+        UPDATE manage_ip_schedule_task
+        SET status = (CASE status WHEN '0' THEN '1' ELSE '0' END)
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="string">
+        delete from
+        manage_ip_schedule_task
+        where id = #{id}
+    </delete>
+
+    <select id="findById" resultType="com.ucsmy.eaccount.manage.entity.ManageIpScheduleTask" parameterType="map">
+        <include refid="query" />
+        where id = #{id}
+    </select>
+
+    <select id="find" resultType="com.ucsmy.eaccount.manage.entity.ManageIpScheduleTask" parameterType="map">
+        <include refid="query" />
+        <where>
+            <if test="entity != null">
+                <if test="!(entity.taskName == null || entity.taskName == '')">
+                    and task_name like concat('%', #{entity.taskName}, '%')
+                </if>
+                <if test="!(entity.taskCode == null || entity.taskCode == '')">
+                    and task_code = #{entity.taskCode}
+                </if>
+            </if>
+        </where>
+        order by task_code, task_name, task_server_ip
+    </select>
+
+    <select id="isTaskCodeExist" resultType="java.lang.Integer" parameterType="map">
+        select count(1)
+        from manage_ip_schedule_task
+        where task_code = #{taskCode}
+        <if test="!(id == null || id == '')">
+            and id != #{id}
+        </if>
+    </select>
+
+</mapper>

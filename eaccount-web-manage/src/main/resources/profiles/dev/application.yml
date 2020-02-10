@@ -1,0 +1,71 @@
+server:
+  port: 9091
+  context-path: /
+  session:
+    timeout: 3600
+
+spring:
+  datasource:
+    url: jdbc:mysql://10.9.4.92:3306/moss_eaccount?allowMultiQueries=true
+    username: root
+    password: tk#23232
+    driverClassName: com.mysql.jdbc.Driver
+  session:
+    store-type: redis
+    redis:
+      namespace: eaccount:manage
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    max-wait: 3000
+    max-active: 100
+    max-idle : 20
+    min-idle : 0
+    timeout: 3000
+
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5 # 启用不严格检查html
+    redis:
+     host: 127.0.0.1
+     password:
+     port: 7000
+
+mybatis:
+  mapper-locations: classpath:sql/mapper/*.xml
+
+#是否启动quartz任务扫描器
+quartz:
+  scan: false
+
+ucsmy:
+  gen-code: true # 开发环境开启代码生成功能
+  init-password: 123456 # 初始密码
+  # 重定向配置（前后端分离配置）
+  redirect:
+    page-url: http://localhost:9090
+    login-url: http://localhost:9090/login
+    api-url: http://localhost:9090/api
+
+# serialNumber配置示例
+# 提供serialNumber生成策略：1.redis自增(redisIncrement)；
+# 序列号生成器配置，格式：4位前缀 + 8位日期 + 6位流水号，限制长度必须为18位，目前长度不支持配置
+ucsmy.serialNumber:
+  # 生成模式，见GeneratorMode
+  mode: db
+  # redis模式下的key命名空间
+  namespace: eaccount:manage
+  # 默认前缀
+  prefix: 1000
+  # 备用前缀
+  backupPrefix: 9999
+  # 序列部分起始基数
+  startNum: 1
+  # 序列号日期格式
+  datePattern: yyMMddHH
+
+logging:
+  level:
+    root: INFO
+    com.ucsmy.eaccount.manage.dao: INFO
+#  file: /usr/local/logs/ucas_core/log.log

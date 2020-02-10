@@ -1,0 +1,66 @@
+#log4j2默认设置
+Configuration:
+  # log4j2内置logger级别
+  status: ERROR
+
+  Properties:
+    Property:
+      name: logPath
+      value: "/usr/local/logs/ucas-client"
+
+  Appenders:
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx"
+
+    RollingFile:
+      # 输出info
+      - name: InfoLog
+        fileName: ${logPath}/log.log
+        filePattern: ${logPath}/$${date:yyyy-MM}/log-%d{yyyy-MM-dd}.log
+        Policies:
+          # 每日输出日志文件
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+        Filters:
+          ThresholdFilter:
+            - level: ERROR
+              onMatch: DENY
+              onMismatch: NEUTRAL
+            - level: INFO
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+          pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{10}%n -msg:%m%n"
+      # 输出error
+      - name: ErrorLog
+        fileName: ${logPath}/error.log
+        filePattern: ${logPath}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}.log
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+        ThresholdFilter:
+          level: ERROR
+          onMatch: ACCEPT
+          onMismatch: DENY
+        PatternLayout:
+          pattern: "%n[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{10}%n -msg:%m%n"
+
+  Loggers:
+    Root:
+      # 默认rootLogger级别
+      level: INFO
+      AppenderRef:
+        - ref: Console
+        - ref: InfoLog
+          level: INFO
+        - ref: ErrorLog
+          level: ERROR
+    Logger:
+      - name: com.ucsmy.ucas
+        # com.ucsmy.ucas包下的logger级别
+        level: DEBUG

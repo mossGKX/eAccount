@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageRoleDao">
+
+	<sql id="query">
+		SELECT mr.id, mr.name, mr.description
+		FROM manage_role mr
+	</sql>
+
+	<insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.ManageRole">
+		insert into manage_role(id, name, description)
+		values(#{id}, #{name}, #{description})
+	</insert>
+
+	<update id="update" parameterType="com.ucsmy.eaccount.manage.entity.ManageRole">
+		update manage_role
+		set name = #{name}, description = #{description}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="string">
+		delete from manage_role
+		where id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageRole">
+		<include refid="query" />
+		where id = #{id}
+	</select>
+
+	<select id="find" resultType="com.ucsmy.eaccount.manage.entity.ManageRole" >
+		<include refid="query" />
+		<where>
+			<if test="entity != null">
+				<if test="!(entity.name == null || entity.name == '')">
+					and name like concat('%',#{entity.name}, '%')
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<insert id="updateMenu" parameterType="com.ucsmy.eaccount.manage.entity.ManageMenu">
+		DELETE FROM manage_role_menu WHERE role_id = #{id};
+		<if test="menus.size() != 0">
+			insert into manage_role_menu(role_id, menu_id)
+			values
+			<foreach collection="menus" item="item" index="index" separator="," >
+				(#{id},#{item.id})
+			</foreach>;
+		</if>
+	</insert>
+</mapper>

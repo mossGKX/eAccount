@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageGenAttrDao">
+
+    <sql id="query">
+        SELECT
+            attr.id,
+            attr.jdbc_name as jdbcName,
+            attr.java_name as javaName,
+            attr.des,
+            attr.java_type as javaType,
+            attr.is_insert as 'insert',
+            attr.is_update as 'update',
+            attr.is_list as list,
+            attr.is_query as 'query',
+            attr.weight as 'insert',
+            attr.code_id as codeId
+        FROM manage_gen_attr attr
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.core.bean.ManageGenAttr">
+        insert into manage_gen_attr(id, jdbc_name, java_name, des, java_type, is_insert, is_update, is_list, is_query, weight, code_id)
+        values(#{id}, #{jdbcName}, #{javaName}, #{des}, #{javaType}, #{insert}, #{update}, #{list}, #{query}, #{weight}, #{codeId})
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.core.bean.ManageGenAttr">
+        update manage_gen_attr
+        set
+            java_name = #{javaName},
+            des = #{des},
+            java_type = #{javaType},
+            is_insert = #{insert},
+            is_update = #{update},
+            is_list = #{list},
+            is_query = #{query},
+            weight = #{weight},
+            code_id = #{codeId}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from manage_gen_attr
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultType="com.ucsmy.core.bean.ManageGenAttr">
+        <include refid="query"/>
+        where id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultType="com.ucsmy.core.bean.ManageGenAttr">
+        <include refid="query"/>
+        <where>
+            <if test="entity != null">
+                <if test="!(entity.codeId == null || entity.codeId == '')">
+                    and code_id = #{entity.codeId}
+                </if>
+            </if>
+        </where>
+    </select>
+</mapper>

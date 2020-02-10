@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.EcHistoryDao">
+
+    <sql id="query">
+        SELECT
+            a.id as 'id',
+            a.account_no as 'accountNo',
+            a.user_no as 'userNo',
+            a.amount as 'amount',
+            a.risk_day as 'riskDay',
+            a.edit_time as 'editTime',
+            a.is_allow_sett as 'isAllowSett',
+            a.remark as 'remark',
+            a.trx_type as 'trxType',
+            a.request_no as 'requestNo',
+            a.bank_trx_no as 'bankTrxNo',
+            a.fund_direction as 'fundDirection',
+            a.create_time as 'createTime',
+            a.balance as 'balance',
+            a.is_complete_sett as 'isCompleteSett',
+            a.version as 'version'
+        FROM ec_account_history a
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.EcHistory">
+        insert into ec_account_history(
+            id,
+            account_no,
+            user_no,
+            amount,
+            risk_day,
+            edit_time,
+            is_allow_sett,
+            remark,
+            trx_type,
+            request_no,
+            bank_trx_no,
+            fund_direction,
+            create_time,
+            balance,
+            is_complete_sett,
+            version
+        )
+        values(
+            #{id},
+            #{accountNo},
+            #{userNo},
+            #{amount},
+            #{riskDay},
+            #{editTime},
+            #{isAllowSett},
+            #{remark},
+            #{trxType},
+            #{requestNo},
+            #{bankTrxNo},
+            #{fundDirection},
+            #{createTime},
+            #{balance},
+            #{isCompleteSett},
+            #{version}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.eaccount.manage.entity.EcHistory">
+        update ec_account_history
+        set
+            account_no = #{accountNo},
+            user_no = #{userNo},
+            amount = #{amount},
+            risk_day = #{riskDay},
+            edit_time = #{editTime},
+            is_allow_sett = #{isAllowSett},
+            remark = #{remark},
+            trx_type = #{trxType},
+            request_no = #{requestNo},
+            bank_trx_no = #{bankTrxNo},
+            fund_direction = #{fundDirection},
+            create_time = #{createTime},
+            balance = #{balance},
+            is_complete_sett = #{isCompleteSett},
+            version = #{version}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from ec_account_history
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcHistory">
+        <include refid="query"/>
+        where a.id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcHistory">
+        <include refid="query"/>
+        <where>
+            <if test="entity != null">
+            </if>
+        </where>
+    </select>
+
+</mapper>

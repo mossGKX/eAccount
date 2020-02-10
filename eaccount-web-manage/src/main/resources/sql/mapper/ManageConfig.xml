@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageConfigDao">
+
+    <sql id="query">
+        SELECT
+            a.id as 'id',
+            a.group_name as 'groupName',
+            a.name as 'name',
+            a.value as 'value',
+            a.des as 'des',
+            a.status as 'status'
+        FROM manage_config a
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.ManageConfig">
+        insert into manage_config(
+            id,
+            group_name,
+            name,
+            value,
+            des
+        )
+        values(
+            #{id},
+            #{groupName},
+            #{name},
+            #{value},
+            #{des}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.eaccount.manage.entity.ManageConfig">
+        update manage_config
+        set
+            group_name = #{groupName},
+            name = #{name},
+            value = #{value},
+            des = #{des},
+            status = #{status}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from manage_config
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageConfig">
+        <include refid="query"/>
+        where a.id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageConfig">
+        <include refid="query"/>
+        <where>
+            <if test="entity != null">
+                <if test="!(entity.groupName == null || entity.groupName == '')">
+                    and group_name = #{entity.groupName}
+                </if>
+                <if test="!(entity.name == null || entity.name == '')">
+                    and name = #{entity.name}
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <update id="updateStatus" parameterType="String">
+        UPDATE manage_config
+        SET status = (CASE status WHEN '0' THEN '1' ELSE '0' END)
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByGroupName" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageConfig">
+        <include refid="query"/>
+        WHERE group_name = #{groupName} AND status = '0'
+    </select>
+
+    <select id="findByGroupNameAndName" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.ManageConfig">
+        <include refid="query"/>
+        WHERE group_name = #{groupName} AND name = #{name} AND status = '0'
+        LIMIT 1
+    </select>
+</mapper>

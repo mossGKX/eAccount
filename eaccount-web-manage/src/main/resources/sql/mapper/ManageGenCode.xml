@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageGenCodeDao">
+
+    <resultMap id="retMap" type="com.ucsmy.core.bean.ManageGenCode">
+        <id column="id" property="id"/>
+        <result column="packageName" property="packageName"/>
+        <result column="entityName" property="entityName"/>
+        <result column="uri" property="uri"/>
+        <result column="dataTable" property="dataTable"/>
+        <collection property="attrs" ofType="com.ucsmy.core.bean.ManageGenAttr">
+            <id column="attrId" property="id"/>
+            <result column="jdbcName" property="jdbcName"/>
+            <result column="javaName" property="javaName"/>
+            <result column="des" property="des"/>
+            <result column="javaType" property="javaType"/>
+            <result column="insert" property="insert"/>
+            <result column="update" property="update"/>
+            <result column="list" property="list"/>
+            <result column="query" property="query"/>
+            <result column="weight" property="weight"/>
+            <result column="codeId" property="codeId"/>
+        </collection>
+    </resultMap>
+
+    <sql id="query">
+        SELECT
+            code.id,
+            code.package_name as packageName,
+            code.entity_name as entityName,
+            code.uri,
+            code.data_table as dataTable,
+            attr.id as attrId,
+            attr.jdbc_name as jdbcName,
+            attr.java_name as javaName,
+            attr.des,
+            attr.java_type as javaType,
+            attr.is_insert as 'insert',
+            attr.is_update as 'update',
+            attr.is_list as list,
+            attr.is_query as 'query',
+            attr.weight,
+            attr.code_id as codeId
+        FROM manage_gen_code code LEFT JOIN manage_gen_attr attr ON code.id = attr.code_id
+    </sql>
+
+    <sql id="pageQuery">
+        SELECT
+            code.id,
+            code.package_name as packageName,
+            code.entity_name as entityName,
+            code.uri,
+            code.data_table as dataTable
+        FROM manage_gen_code code
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.core.bean.ManageGenCode">
+        insert into manage_gen_code(id, package_name, entity_name, uri, data_table)
+        values(#{id}, #{packageName}, #{entityName}, #{uri}, #{dataTable})
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.core.bean.ManageGenCode">
+        update manage_gen_code
+        set
+            package_name = #{packageName},
+            entity_name = #{entityName},
+            uri = #{uri}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from manage_gen_code
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultMap="retMap">
+        <include refid="query"/>
+        where code.id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultMap="retMap">
+        <include refid="pageQuery"/>
+        <where>
+            <if test="entity != null">
+                <if test="!(entity.entityName == null || entity.entityName == '')">
+                    and entity_name like concat('%', #{entity.entityName}, '%')
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllTables" resultType="string">
+        show tables
+    </select>
+</mapper>

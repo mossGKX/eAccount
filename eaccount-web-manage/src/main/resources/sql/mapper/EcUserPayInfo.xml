@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.EcUserPayInfoDao">
+
+    <sql id="query">
+        SELECT
+            a.user_no as 'userNo',
+            a.app_type as 'appType',
+            a.offline_app_id as 'offlineAppId',
+            a.partner_key as 'partnerKey',
+            a.user_name as 'userName',
+            a.version as 'version',
+            a.app_sectet as 'appSectet',
+            a.merchant_id as 'merchantId',
+            a.id as 'id',
+            a.pay_way_code as 'payWayCode',
+            a.pay_way_name as 'payWayName',
+            a.app_id as 'appId',
+            a.status as 'status',
+            a.remark as 'remark',
+            a.rsa_private_key as 'rsaPrivateKey',
+            a.rsa_public_key as 'rsaPublicKey',
+            a.create_time as 'createTime',
+            a.edit_time as 'editTime'
+        FROM ec_user_pay_info a
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.EcUserPayInfo">
+        insert into ec_user_pay_info(
+            user_no,
+            partner_key,
+            user_name,
+            app_sectet,
+            merchant_id,
+            id,
+            pay_way_code,
+            pay_way_name,
+            app_id,
+            status,
+            remark,
+            rsa_private_key,
+            rsa_public_key,
+            create_time
+        )
+        values(
+            #{userNo},
+            #{partnerKey},
+            #{userName},
+            #{appSectet},
+            #{merchantId},
+            #{id},
+            #{payWayCode},
+            #{payWayName},
+            #{appId},
+            #{status},
+            #{remark},
+            #{rsaPrivateKey},
+            #{rsaPublicKey},
+            #{createTime}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.eaccount.manage.entity.EcUserPayInfo">
+        update ec_user_pay_info
+        set
+            user_no = #{userNo},
+            partner_key = #{partnerKey},
+            app_sectet = #{appSectet},
+            merchant_id = #{merchantId},
+            pay_way_code = #{payWayCode},
+            pay_way_name = #{payWayName},
+            app_id = #{appId},
+            status = #{status},
+            remark = #{remark},
+            rsa_private_key = #{rsaPrivateKey},
+            rsa_public_key = #{rsaPublicKey},
+            edit_time = #{editTime}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from ec_user_pay_info
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcUserPayInfo">
+        <include refid="query"/>
+        where a.id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcUserPayInfo">
+        <include refid="query"/>
+        <where>
+            <if test="entity != null">
+                <if test="!(entity.payWayCode == null || entity.payWayCode == '')">
+                    and pay_way_code = #{entity.payWayCode}
+                </if>
+            </if>
+        </where>
+    </select>
+
+</mapper>

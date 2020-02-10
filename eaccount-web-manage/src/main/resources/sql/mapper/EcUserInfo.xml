@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.EcUserInfoDao">
+
+    <sql id="query">
+        SELECT
+            a.user_type as 'userType',
+            a.salt as 'salt',
+            a.pay_pwd as 'payPwd',
+            a.status as 'status',
+            a.id as 'id',
+            a.login_name as 'loginName',
+            a.user_name as 'userName',
+            a.account_no as 'accountNo',
+            a.password as 'password',
+            a.user_no as 'userNo',
+            a.create_time as 'createTime'
+        FROM ec_user_info a
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.EcUserInfo">
+        insert into ec_user_info(
+            user_type,
+            salt,
+            pay_pwd,
+            status,
+            id,
+            login_name,
+            user_name,
+            account_no,
+            password,
+            user_no,
+            create_time
+        )
+        values(
+            #{userType},
+            #{salt},
+            #{payPwd},
+            #{status},
+            #{id},
+            #{loginName},
+            #{userName},
+            #{accountNo},
+            #{password},
+            #{userNo},
+            #{createTime}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.eaccount.manage.entity.EcUserInfo">
+        update ec_user_info
+        set
+            user_type = #{userType},
+            salt = #{salt},
+            pay_pwd = #{payPwd},
+            status = #{status},
+            login_name = #{loginName},
+            user_name = #{userName},
+            account_no = #{accountNo},
+            password = #{password},
+            user_no = #{userNo},
+            create_time = #{createTime}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from ec_user_info
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcUserInfo">
+        <include refid="query"/>
+        where a.id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcUserInfo">
+        <include refid="query"/>
+        <where>
+            <if test="entity != null">
+                <if test="!(entity.userType == null || entity.userType == '')">
+                    and user_type = #{entity.userType}
+                </if>
+                <if test="!(entity.loginName == null || entity.loginName == '')">
+                    and login_name LIKE concat('%', #{entity.loginName}, '%')
+                </if>
+                <if test="!(entity.userName == null || entity.userName == '')">
+                    and user_name LIKE concat('%', #{entity.userName}, '%')
+                </if>
+                <if test="!(entity.accountNo == null || entity.accountNo == '')">
+                    and account_no = #{entity.accountNo}
+                </if>
+                <if test="!(entity.userNo == null || entity.userNo == '')">
+                    and user_no = #{entity.userNo}
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <update id="updateStatus" parameterType="String">
+        UPDATE ec_user_info
+        SET status = (CASE status WHEN 0 THEN 1 ELSE 0 END)
+        WHERE id = #{id}
+    </update>
+
+    <select id="findExistUser" parameterType="string" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM (
+        SELECT a.* FROM ec_user_info a
+        WHERE
+        login_name = #{entity.loginName}
+        OR account_no = #{entity.accountNo}
+        OR user_no = #{entity.userNo}
+        ) c
+    </select>
+
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.EcAccountDao">
+
+    <sql id="query">
+        SELECT
+            a.total_expend as 'totalExpend',
+            a.id as 'id',
+            a.today_expend as 'todayExpend',
+            a.version as 'version',
+            a.sett_amount as 'settAmount',
+            a.security_money as 'securityMoney',
+            a.total_income as 'totalIncome',
+            a.account_type as 'accountType',
+            a.today_income as 'todayIncome',
+            a.edit_time as 'editTime',
+            a.remark as 'remark',
+            a.credit_line as 'creditLine',
+            a.status as 'status',
+            a.user_no as 'userNo',
+            a.account_no as 'accountNo',
+            a.unbalance as 'unbalance',
+            a.create_time as 'createTime',
+            a.balance as 'balance'
+        FROM ec_account a
+    </sql>
+
+    <insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.EcAccount">
+        insert into ec_account(
+            total_expend,
+            id,
+            today_expend,
+            version,
+            sett_amount,
+            security_money,
+            total_income,
+            account_type,
+            today_income,
+            edit_time,
+            remark,
+            credit_line,
+            status,
+            user_no,
+            account_no,
+            unbalance,
+            create_time,
+            balance
+        )
+        values(
+            #{totalExpend},
+            #{id},
+            #{todayExpend},
+            #{version},
+            #{settAmount},
+            #{securityMoney},
+            #{totalIncome},
+            #{accountType},
+            #{todayIncome},
+            #{editTime},
+            #{remark},
+            #{creditLine},
+            #{status},
+            #{userNo},
+            #{accountNo},
+            #{unbalance},
+            #{createTime},
+            #{balance}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.ucsmy.eaccount.manage.entity.EcAccount">
+        update ec_account
+        set
+            total_expend = #{totalExpend},
+            today_expend = #{todayExpend},
+            version = #{version},
+            sett_amount = #{settAmount},
+            security_money = #{securityMoney},
+            total_income = #{totalIncome},
+            account_type = #{accountType},
+            today_income = #{todayIncome},
+            edit_time = #{editTime},
+            remark = #{remark},
+            credit_line = #{creditLine},
+            status = #{status},
+            user_no = #{userNo},
+            account_no = #{accountNo},
+            unbalance = #{unbalance},
+            create_time = #{createTime},
+            balance = #{balance}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from ec_account
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcAccount">
+        <include refid="query"/>
+        where a.id = #{id}
+    </select>
+
+    <select id="find" parameterType="string" resultType="com.ucsmy.eaccount.manage.entity.EcAccount">
+        <include refid="query"/>
+        <where>
+            <if test="entity != null">
+                <if test="!(entity.accountType == null || entity.accountType == '')">
+                    and account_type = #{entity.accountType}
+                </if>
+                <if test="!(entity.accountNo == null || entity.accountNo == '')">
+                    and account_no = #{entity.accountNo}
+                </if>
+                <if test="!(entity.userNo == null || entity.userNo == '')">
+                    and user_no = #{entity.userNo}
+                </if>
+            </if>
+        </where>
+    </select>
+
+</mapper>

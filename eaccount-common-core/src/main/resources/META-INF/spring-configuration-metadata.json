@@ -1,0 +1,128 @@
+{"groups": [
+  {
+    "name": "ucsmy.captcha",
+    "type": "com.ucsmy.core.tool.captcha.CaptchaProperties",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.security",
+    "type": "com.ucsmy.core.tool.security.SecurityProperties",
+    "sourceType": "com.ucsmy.core.tool.security.SecurityProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber",
+    "type": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties",
+    "sourceType": "com.ucsmy.core.tool.security.SecurityProperties"
+  }
+],"properties": [
+  {
+    "name": "ucsmy.captcha.border",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.border-color",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.border-thickness",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.font-color",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.font-names",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.font-size",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.image-width",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.image-height",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.char-length",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.char-space",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.char-string",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.captcha.noise-color",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.captcha.CaptchaProperties"
+  },
+  {
+    "name": "ucsmy.security.invalid-time",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.security.SecurityProperties"
+  },
+  {
+    "name": "ucsmy.security.default-level",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.security.SecurityProperties"
+  },
+  {
+    "name": "ucsmy.security.namespace",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.security.SecurityProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber.mode",
+    "type": "com.ucsmy.core.tool.serialNumber.bean.GeneratorMode",
+    "sourceType": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber.namespace",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber.prefix",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber.backupPrefix",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber.startNum",
+    "type": "java.lang.Integer",
+    "sourceType": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber.datePattern",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties"
+  },
+  {
+    "name": "ucsmy.serialNumber.numberPattern",
+    "type": "java.lang.String",
+    "sourceType": "com.ucsmy.core.tool.serialNumber.bean.SerialNumberProperties"
+  }
+], "hints": []}

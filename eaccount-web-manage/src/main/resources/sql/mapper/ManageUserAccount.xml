@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucsmy.eaccount.manage.dao.ManageUserAccountDao">
+
+	<sql id="query">
+		SELECT a.id,
+			a.create_time as createTime,
+			a.password,
+			a.salt,
+			a.status,
+			a.account,
+			a.email,
+			a.mobilephone,
+			r.id as "role.id",
+			r.name as "role.name",
+			r.description as "role.description"
+		FROM manage_user_account a left join manage_role r on r.id = a.role_id
+	</sql>
+
+	<insert id="save" parameterType="com.ucsmy.eaccount.manage.entity.ManageUserAccount">
+		insert into manage_user_account(
+			id,
+			create_time,
+			password,
+			salt,
+			status,
+			account,
+			email,
+			mobilephone,
+			role_id
+		)
+		values(
+			#{id},
+			#{createTime},
+			#{password},
+			#{salt},
+			#{status},
+			#{account},
+			#{email},
+			#{mobilephone},
+			#{role.id}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.ucsmy.eaccount.manage.entity.ManageUserAccount">
+		UPDATE manage_user_account
+		SET email = #{email}, mobilephone = #{mobilephone}, role_id = #{role.id}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updatePassword" parameterType="com.ucsmy.eaccount.manage.entity.ManageUserAccount">
+		UPDATE manage_user_account
+		SET password = #{password}, salt = #{salt}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateStatus" parameterType="String">
+		UPDATE manage_user_account
+		SET status = (CASE status WHEN 0 THEN 1 ELSE 0 END)
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE FROM manage_user_account WHERE id = #{id}
+	</delete>
+
+	<select id="findById" resultType="com.ucsmy.eaccount.manage.entity.ManageUserAccount" parameterType="String">
+		<include refid="query"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findByUserName" resultType="com.ucsmy.eaccount.manage.entity.ManageUserAccount" parameterType="String">
+		<include refid="query"/>
+		where account = #{userName} OR email = #{userName} OR mobilephone = #{userName}
+	</select>
+
+	<select id="find" resultType="com.ucsmy.eaccount.manage.entity.ManageUserAccount">
+		<include refid="query"/>
+		<where>
+			<if test="entity != null">
+				<if test="!(entity.account == null || entity.account == '')">
+					and account = #{entity.account}
+				</if>
+				<if test="!(entity.email == null || entity.email == '')">
+					and email = #{entity.email}
+				</if>
+				<if test="!(entity.mobilephone == null || entity.mobilephone == '')">
+					and mobilephone = #{entity.mobilephone}
+				</if>
+			</if>
+		</where>
+	</select>
+</mapper>
