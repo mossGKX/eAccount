@@ -32,7 +32,7 @@
         <kaptcha.version>0.0.8</kaptcha.version>
         <bcprov-jdk16.version>1.45</bcprov-jdk16.version>
         <quartz.version>2.2.1</quartz.version>
-        <ant.version>1.9.7</ant.version>
+        <ant.version>1.10.9</ant.version>
         <fastjson.version>1.2.7</fastjson.version>
         <swagger-models.version>1.5.22</swagger-models.version>
     </properties>
